@@ -2,13 +2,14 @@
 #define LEXER_H
 
 typedef enum {
-    Word
+    Word = 1,
+    Number = 2,
 } TokenKind;
 
 typedef struct {
-    char* start;
-    int size;
     TokenKind kind;
+    int size;
+    char* start;
 } Token;
 
 typedef struct {
@@ -16,6 +17,6 @@ typedef struct {
     int size;
 } Tokens;
 
-Tokens* parse_tokens(char* source);
+Tokens parse_tokens(char* source);
 
 #endif
