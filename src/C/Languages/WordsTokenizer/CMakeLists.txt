@@ -4,10 +4,9 @@ project(WordsTokenizer C)
 set(CMAKE_C_STANDARD 11)
 
 include_directories(common)
+include_directories(core)
 
-add_executable(WordsTokenizer
-        common/cursor.c
-        common/cursor.h
-        core/lexer.h
-        core/lexer.c
-        main.c)
+file(GLOB SOURCES "common/*.c")
+file(GLOB SOURCES "core/*.c")
+
+add_executable(WordsTokenizer ${SOURCES} main.c)
