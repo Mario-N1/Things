@@ -8,4 +8,6 @@ include_directories(common)
 add_executable(WordsTokenizer
         common/cursor.c
         common/cursor.h
+        core/lexer.h
+        core/lexer.c
         main.c)
