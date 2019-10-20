@@ -11,4 +11,11 @@ typedef struct {
     TokenKind kind;
 } Token;
 
+typedef struct {
+    Token* all;
+    int size;
+} Tokens;
+
+Tokens* parse_tokens(char* source);
+
 #endif
