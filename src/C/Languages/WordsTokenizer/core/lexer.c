@@ -10,6 +10,11 @@ int inline is_digit(char x) {
     return x >= '0' && x <= '9';
 }
 
+int inline is_letter(char x) {
+    return x >= 'a' && x <= 'z' ||
+           x >= 'A' && x <= 'Z';
+}
+
 void inline append(Tokens* tokens, Token token) {
     int size = sizeof(token);
 
@@ -97,8 +102,10 @@ Tokens parse_tokens(char* source) {
         }
         else if (is_digit(ch)) {
             parse_all(is_digit, Number);
+        } else if (is_letter(ch)) {
+            parse_all(is_letter, Word);
         } else {
-            current++;
+          current++;
         }
     }
 
