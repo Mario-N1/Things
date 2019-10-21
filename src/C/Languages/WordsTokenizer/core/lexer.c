@@ -52,18 +52,23 @@ void inline append(Tokens* tokens, Token token) {
 #define create_token(kind) token = (Token) { kind, start, size };
 
 #define parse(kind, _while, _until)\
-while(1)\
-{\
+    while(1)\
+    {\
+        iterate();\
+        if (_until(ch)) {\
+            create_token(kind);\
+            append(&tokens, token);\
+            break;\
+        }\
+        if (!_while(ch)) {\
+            return tokens;\
+        }\
+    };
+
+#define parse_one(kind)\
     iterate();\
-    if (_until(ch)) {\
-        create_token(kind);\
-        append(&tokens, token);\
-        break;\
-    }\
-    if (!_while(ch)) {\
-        return tokens;\
-    }\
-};\
+    create_token(kind);\
+    append(&tokens, token);\
 
 #define for_all(x) x
 #define until(x) x
@@ -94,6 +99,10 @@ Tokens parse_tokens(char* source) {
             parse(Number, for_all(is_digit), until(is_separator));
         } else if (is_letter(ch)) {
             parse(Word, for_all(is_letter), until(is_separator));
+        } else if (ch == '.') {
+            parse_one(Dot);
+        } else if (ch == ',') {
+            parse_one(Comma);
         } else {
           current++;
         }

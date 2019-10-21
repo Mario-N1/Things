@@ -4,6 +4,8 @@
 typedef enum {
     Word = 1,
     Number = 2,
+    Dot = 3,
+    Comma = 4
 } TokenKind;
 
 typedef struct {
