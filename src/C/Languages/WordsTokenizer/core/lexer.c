@@ -11,8 +11,8 @@ int inline is_digit(char x) {
 }
 
 int inline is_letter(char x) {
-    return x >= 'a' && x <= 'z' ||
-           x >= 'A' && x <= 'Z';
+    return (x >= 'a' && x <= 'z') ||
+           (x >= 'A' && x <= 'Z');
 }
 
 void inline append(Tokens* tokens, Token token) {
