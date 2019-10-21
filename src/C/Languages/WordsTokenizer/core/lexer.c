@@ -85,18 +85,24 @@ Tokens parse_tokens(char* source) {
 
         if (is_eol(ch)) {
             return tokens;
-        } else if (is_space(ch)) {
+        }
+        else if (is_space(ch)) {
             current++;
-        } else if (is_digit(ch)) {
+        }
+        else if (is_digit(ch)) {
             parse(Number, for_all(is_digit), until(is_separator));
-        } else if (is_letter(ch)) {
+        }
+        else if (is_letter(ch)) {
             parse(Word, for_all(is_letter), until(is_separator));
-        } else if (ch == '.') {
+        }
+        else if (ch == '.') {
             parse_one(Dot);
-        } else if (ch == ',') {
+        }
+        else if (ch == ',') {
             parse_one(Comma);
-        } else {
-          current++;
+        }
+        else {
+            current++;
         }
     }
 
