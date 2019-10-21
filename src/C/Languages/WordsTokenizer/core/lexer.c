@@ -40,6 +40,40 @@ Token inline parse_number(char* current) {
     };
 }
 
+Token inline parse_word(char *current) {
+    char* start = current;
+    int size = 0;
+
+    while (1) {
+        char ch = *current;
+
+        if (!is_digit(ch))
+            break;
+
+        current++;
+        size++;
+    }
+
+    return (Token) {
+        .kind = Number,
+        .start = start,
+        .size = size
+    };
+}
+
+#define parse_all(func, as) \
+do {                        \
+    size++;                 \
+    current++;              \
+    ch = *current;          \
+} while (func(ch));         \
+token = (Token) {           \
+    .kind = as,             \
+    .start = start,         \
+    .size = size            \
+};                          \
+append(&tokens, token);     \
+
 Tokens parse_tokens(char* source) {
     Tokens tokens = {
         .all = 0,
@@ -47,20 +81,25 @@ Tokens parse_tokens(char* source) {
     };
 
     char* current = source;
+    char* start = current;
+
+    char ch;
+    int size;
+    Token token;
 
     while (1) {
-        char ch = *current;
+        start = current;
+        ch = *start;
+        size = 0;
 
         if (is_eol(ch)) {
             return tokens;
         }
-
-        if (is_digit(ch)) {
-            Token number = parse_number(current);
-            append(&tokens, number);
+        else if (is_digit(ch)) {
+            parse_all(is_digit, Number);
+        } else {
+            current++;
         }
-
-        current++;
     }
 
     return tokens;
