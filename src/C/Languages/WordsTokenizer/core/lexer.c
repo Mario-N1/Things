@@ -31,14 +31,6 @@ int inline is_letter(char x) {
            (x >= 'A' && x <= 'Z');
 }
 
-Token inline new(TokenKind kind, char* start, int size) {
-    return (Token) {
-        .kind = kind,
-        .start = start,
-        .size = size
-    };
-}
-
 void inline append(Tokens* tokens, Token token) {
     int size = sizeof(token);
 
