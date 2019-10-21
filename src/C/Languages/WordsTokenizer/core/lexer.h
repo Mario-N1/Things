@@ -8,8 +8,8 @@ typedef enum {
 
 typedef struct {
     TokenKind kind;
-    int size;
     char* start;
+    int size;
 } Token;
 
 typedef struct {
