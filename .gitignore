@@ -1,7 +1,17 @@
 # IDE.
 .idea/
 
+# Emacs
+*~
+\#*\#
+.\#*
+
 # C.
 *.out
+*.o
 .ccls-cache/
 .ccls
+
+# CMake.
+cmake-build-debug/
+build/
