@@ -2,6 +2,41 @@
 #include <stdlib.h>
 #include "lexer.h"
 
+#define or else
+#define when(x) x
+#define is ==
+
+#define iterate() size++; current++; ch = *current;
+#define create_token(kind) token = (Token) { kind, start, size };
+
+#define parse_all_as(kind, when_)\
+    if (when_(ch)) {\
+        while(1)\
+        {\
+            iterate();\
+            if (is_separator(ch)) {\
+                create_token(kind);\
+                append(&tokens, token);\
+                break;\
+            }\
+            if (!when_(ch)) {\
+                return tokens;\
+            }\
+        };\
+    }
+
+#define parse_one_as(kind, when_)\
+    if (when_) {\
+        iterate();\
+        create_token(kind);\
+        append(&tokens, token);\
+    }
+
+#define skip(when_)\
+    if (when_) {\
+        current++;\
+    }
+
 int inline is_eol(char x) {
     return x == '\0';
 }
@@ -40,41 +75,6 @@ void inline append(Tokens* tokens, Token token) {
     *(tokens->all) = token;
 }
 
-#define iterate() size++; current++; ch = *current;
-#define create_token(kind) token = (Token) { kind, start, size };
-
-#define parse_all_as(kind, when_)\
-    else if (when_(ch)) {\
-        while(1)\
-        {\
-            iterate();\
-            if (is_separator(ch)) {\
-                create_token(kind);\
-                append(&tokens, token);\
-                break;\
-            }\
-            if (!when_(ch)) {\
-                return tokens;\
-            }\
-        };\
-    }
-
-#define parse_one_as(kind, when_)\
-    else if (when_) {\
-        iterate();\
-        create_token(kind);\
-        append(&tokens, token);\
-    }
-
-#define skip(when_)\
-    else if (when_) {\
-        current++;\
-    }
-
-#define or
-#define when(x) x
-#define is ==
-
 Tokens parse_tokens(char* source) {
     Tokens tokens = {
         .all = 0,
@@ -109,7 +109,7 @@ Tokens parse_tokens(char* source) {
         or parse_one_as(Question,    when(ch is '?'))
         or parse_one_as(Exclamation, when(ch is '!'))
 
-        or else {
+        or {
             current++;
         }
     }
