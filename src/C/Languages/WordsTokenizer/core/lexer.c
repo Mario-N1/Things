@@ -72,7 +72,7 @@ void inline append(Tokens* tokens, Token token) {
     tokens->size += 1;
     tokens->all = realloc(tokens->all, sizeof(tokens->all) + size);
 
-    *(tokens->all) = token;
+    *(tokens->all + tokens->size - 1) = token;
 }
 
 Tokens parse_tokens(char* source) {
@@ -116,3 +116,26 @@ Tokens parse_tokens(char* source) {
 
     return tokens;
 }
+
+void print_token(Token token) {
+    printf("kind: %d | ", token.kind);
+
+    for (int i = 0; i < token.size; i++) {
+        char ch = *(token.start + i);
+        putchar(ch);
+    }
+}
+
+void print_tokens(Tokens tokens) {
+    for (int i = 0; i < tokens.size; i++) {
+        Token token = *(tokens.all + i);
+
+        printf("[ ");
+        print_token(token);
+        printf(" ]");
+
+        if (i != tokens.size - 1)
+            printf(" ");
+    }
+}
+

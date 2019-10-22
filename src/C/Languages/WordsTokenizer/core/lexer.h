@@ -25,4 +25,6 @@ typedef struct {
 
 Tokens parse_tokens(char* source);
 
+void print_tokens(Tokens tokens);
+
 #endif

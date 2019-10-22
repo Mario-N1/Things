@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include "core/lexer.h"
 
-int main(int args_count, char** args) {
+int main() {
     Tokens tokens = parse_tokens("Abc 1 abc!.");
-    Token x = *(tokens.all);
 
-    printf("%d", tokens.size);
+    print_tokens(tokens);
 
     return 0;
 }
