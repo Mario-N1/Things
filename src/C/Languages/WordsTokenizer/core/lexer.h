@@ -5,7 +5,11 @@ typedef enum {
     Word = 1,
     Number = 2,
     Dot = 3,
-    Comma = 4
+    Comma = 4,
+    Colon = 5,
+    Semicolon = 6,
+    Question = 7,
+    Exclamation = 8
 } TokenKind;
 
 typedef struct {

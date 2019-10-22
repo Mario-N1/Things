@@ -98,11 +98,15 @@ Tokens parse_tokens(char* source) {
 
         or skip(when(ch == ' '))
 
-        or parse_all_as(Number, when(is_digit))
-        or parse_all_as(Word,   when(is_letter))
+        or parse_all_as(Number,      when(is_digit))
+        or parse_all_as(Word,        when(is_letter))
 
-        or parse_one_as(Dot,    when(ch == '.'))
-        or parse_one_as(Comma,  when(ch == ','))
+        or parse_one_as(Dot,         when(ch == '.'))
+        or parse_one_as(Comma,       when(ch == ','))
+        or parse_one_as(Colon,       when(ch == ':'))
+        or parse_one_as(Semicolon,   when(ch == ';'))
+        or parse_one_as(Question,    when(ch == '?'))
+        or parse_one_as(Exclamation, when(ch == '!'))
 
         or else {
             current++;
