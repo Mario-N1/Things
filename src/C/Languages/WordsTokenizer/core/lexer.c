@@ -43,27 +43,36 @@ void inline append(Tokens* tokens, Token token) {
 #define iterate() size++; current++; ch = *current;
 #define create_token(kind) token = (Token) { kind, start, size };
 
-#define parse(kind, _while, _until)\
-    while(1)\
-    {\
+#define parse_all_as(kind, when_)\
+    else if (when_(ch)) {\
+        while(1)\
+        {\
+            iterate();\
+            if (is_separator(ch)) {\
+                create_token(kind);\
+                append(&tokens, token);\
+                break;\
+            }\
+            if (!when_(ch)) {\
+                return tokens;\
+            }\
+        };\
+    }
+
+#define parse_one_as(kind, when_)\
+    else if (when_) {\
         iterate();\
-        if (_until(ch)) {\
-            create_token(kind);\
-            append(&tokens, token);\
-            break;\
-        }\
-        if (!_while(ch)) {\
-            return tokens;\
-        }\
-    };
+        create_token(kind);\
+        append(&tokens, token);\
+    }
 
-#define parse_one(kind)\
-    iterate();\
-    create_token(kind);\
-    append(&tokens, token);\
+#define skip(when_)\
+    else if (when_) {\
+        current++;\
+    }
 
-#define for_all(x) x
-#define until(x) x
+#define or
+#define when(x) x
 
 Tokens parse_tokens(char* source) {
     Tokens tokens = {
@@ -86,22 +95,16 @@ Tokens parse_tokens(char* source) {
         if (is_eol(ch)) {
             return tokens;
         }
-        else if (is_space(ch)) {
-            current++;
-        }
-        else if (is_digit(ch)) {
-            parse(Number, for_all(is_digit), until(is_separator));
-        }
-        else if (is_letter(ch)) {
-            parse(Word, for_all(is_letter), until(is_separator));
-        }
-        else if (ch == '.') {
-            parse_one(Dot);
-        }
-        else if (ch == ',') {
-            parse_one(Comma);
-        }
-        else {
+
+        or skip(when(ch == ' '))
+
+        or parse_all_as(Number, when(is_digit))
+        or parse_all_as(Word,   when(is_letter))
+
+        or parse_one_as(Dot,    when(ch == '.'))
+        or parse_one_as(Comma,  when(ch == ','))
+
+        or else {
             current++;
         }
     }
