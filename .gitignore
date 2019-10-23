@@ -15,3 +15,6 @@
 # CMake.
 cmake-build-debug/
 build/
+
+# Haskell.
+.stack-work/
