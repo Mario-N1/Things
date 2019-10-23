@@ -3,8 +3,9 @@
 #include "lexer.h"
 
 #define or else
-#define when(x) x
 #define is ==
+#define when(x) x
+#define to(x) x
 
 #define iterate() size++; current++; ch = *current;
 #define create_token(kind) token = (Token) { kind, start, size };
@@ -16,7 +17,7 @@
             iterate();\
             if (is_separator(ch)) {\
                 create_token(kind);\
-                append(&tokens, token);\
+                append(token, to(&tokens));\
                 break;\
             }\
             if (!when_(ch)) {\
@@ -66,7 +67,7 @@ int inline is_letter(char x) {
            (x >= 'A' && x <= 'Z');
 }
 
-void inline append(Tokens* tokens, Token token) {
+void inline append(Token token, Tokens* tokens) {
     int size = sizeof(token);
 
     tokens->size += 1;
