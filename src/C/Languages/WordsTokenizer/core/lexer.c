@@ -30,7 +30,7 @@
     if (when_) {\
         iterate();\
         create_token(kind);\
-        append(&tokens, token);\
+        append(token, to(&tokens));\
     }
 
 #define skip(when_)\
