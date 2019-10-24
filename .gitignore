@@ -1,3 +1,6 @@
+# Common.
+*.lock
+
 # IDE.
 .idea/
 
