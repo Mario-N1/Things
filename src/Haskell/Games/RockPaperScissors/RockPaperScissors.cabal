@@ -4,14 +4,12 @@ version:             0.1.0.0
 -- description:
 homepage:            https://github.com/githubuser/RockPaperScissors#readme
 license:             BSD3
-license-file:        LICENSE
 author:              Author name here
 maintainer:          example@example.com
 copyright:           2019 Author name here
 category:            Web
 build-type:          Simple
 cabal-version:       >=1.10
-extra-source-files:  README.md
 
 executable RockPaperScissors
   hs-source-dirs:      src
