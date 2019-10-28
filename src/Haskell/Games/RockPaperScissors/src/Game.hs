@@ -1,15 +1,25 @@
 module Game where
 
-win :: String -> String -> Bool
-win "Scissors" "Paper"    = True
-win "Scissors" "Stone"    = False
-win "Paper"    "Stone"    = True
-win "Paper"    "Scissors" = False
-win "Stone"    "Scissors" = True
-win "Stone"    "Paper"    = False
+data Weapon = Rock
+            | Paper
+            | Scissors
+            deriving (Show, Read)
 
-lose :: String -> String -> Bool
-lose x y = not $ win x y
+data Result = Win
+            | Lose
+            | Draw
+            deriving (Show)
 
-draw :: String -> String -> Bool
-draw x y = x == y
+weaponOf :: String -> Weapon
+weaponOf = read
+
+vs :: Weapon -> Weapon -> Result
+vs Scissors Paper    = Win
+vs Scissors Rock     = Lose
+vs Scissors Scissors = Draw
+vs Paper    Rock     = Win
+vs Paper    Scissors = Lose
+vs Paper    Paper    = Draw
+vs Rock     Scissors = Win
+vs Rock     Paper    = Lose
+vs Rock     Rock     = Draw
