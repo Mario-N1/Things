@@ -1,8 +1,8 @@
 module Game where
 
 win :: String -> String -> Bool
-win "Scissors" "Paper" = True
-win "Scissors" "Stone" = False
+win "Scissors" "Paper"    = True
+win "Scissors" "Stone"    = False
 win "Paper"    "Stone"    = True
 win "Paper"    "Scissors" = False
 win "Stone"    "Scissors" = True
