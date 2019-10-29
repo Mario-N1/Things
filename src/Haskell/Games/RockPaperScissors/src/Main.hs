@@ -9,7 +9,7 @@ data Answer = Yes | No
 instance Read Answer where
   readsPrec _ "y" = [(Yes, "")]
   readsPrec _ "n" = [(No, "")]
-  readsPrec _ _ = []
+  readsPrec _  _  = []
 
 ask :: (Read a) => String -> IO a
 ask question = do
