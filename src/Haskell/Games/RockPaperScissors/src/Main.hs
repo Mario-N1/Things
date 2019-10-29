@@ -2,6 +2,7 @@ module Main where
 
 import System.IO
 import Game
+import Beauty
 
 data Answer = Yes | No
 
@@ -10,34 +11,31 @@ instance Read Answer where
   readsPrec _ "n" = [(No, "")]
   readsPrec _ _ = []
 
-ask :: String -> IO Answer
+ask :: (Read a) => String -> IO a
 ask question = do
-  putStr question
-  char <- getLine
-  return $ read char
+  question |> toConsoleLn
+  answer   <- fromConsoleLn
 
-ioWeapon :: IO Weapon
-ioWeapon = do
-  putStr "Pick weapon: "
-  line <- getLine
-  return $ weaponOf line
-
-end :: IO ()
-end = putStrLn "Finish!"
+  return $ parsed answer
 
 loop :: IO ()
 loop = do
-  player <- ioWeapon
-  ai     <- ioWeapon
+  player <- ask "Pick weapon: "
+  ai     <- ask "Pick weapon: "
 
-  putStrLn $ show $ player `vs` ai
+  player `vs` ai
+    |> asText
+    |> toConsoleLn
 
-  answer <- ask "Wanna repeat? "
-  continue answer
+  answer <- ask "Wanna repeat? (y/n)"
+  continueWith answer
 
-continue :: Answer -> IO ()
-continue Yes = loop
-continue No  = end
+end :: IO ()
+end = "Finish!" |> toConsoleLn
+
+continueWith :: Answer -> IO ()
+continueWith Yes = loop
+continueWith No  = end
 
 main :: IO ()
 main = do
