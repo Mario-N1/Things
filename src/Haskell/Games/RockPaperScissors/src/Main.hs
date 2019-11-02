@@ -16,7 +16,7 @@ ask question = do
   question |> toConsoleLn
   answer   <- fromConsoleLn
 
-  return $ parsed answer
+  return <| parsed answer
 
 loop :: IO ()
 loop = do

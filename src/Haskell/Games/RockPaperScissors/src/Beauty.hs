@@ -23,3 +23,6 @@ x `as` f = f x
 
 infixl 7 |>
 x |> f = f x
+
+infixr 7 <|
+f <| x = f x
